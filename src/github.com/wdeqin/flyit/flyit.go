@@ -1,8 +1,11 @@
 package main
 
-import "github.com/wdeqin/flyit/util"
+import u "github.com/wdeqin/flyit/util"
+import "fmt"
 
 func main() {
-	println("hello, world")
-	println("1 + 1 = ", util.Add(1, 1))
+	u.MyPrint("1 + 1 = ", u.Add(1, 1), "\n")
+	fmt.Printf("%v\n", u.MyPrint)
+	fmt.Printf("%+v\n", u.MyPrint)
+	fmt.Printf("%#v\n", u.MyPrint)
 }
