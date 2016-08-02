@@ -1,4 +1,4 @@
-package util
+package experiment
 
 import "os"
 import "strconv"
