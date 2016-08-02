@@ -1,6 +1,7 @@
 package dispatch
 
 import "fmt"
+import "bytes"
 
 type Dispatcher interface {
 	Dispatch([]interface{}) bool
@@ -100,14 +101,16 @@ func (dd *defaultDispatchee) GetSorNum(e interface{}) int {
 
 func (dd *defaultDispatchee) ProcessSor(sorNum int, data []interface{}) int {
 	go func() {
-		fmt.Printf("$%d [", sorNum)
+		var buf bytes.Buffer
+		buf.WriteString(fmt.Sprintf("$%d [", sorNum))
 		for _, e := range data {
 			if e == nil {
 				break
 			}
-			fmt.Printf("%2v, ", e)
+			buf.WriteString(fmt.Sprintf("%2v, ", e))
 		}
-		fmt.Printf("\b\b]\n")
+		buf.WriteString(fmt.Sprintf("\b\b]\n"))
+		fmt.Print(buf.String())
 	}()
 	return 0
 }

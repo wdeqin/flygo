@@ -38,6 +38,15 @@ func TestMyPrint(t *testing.T) {
 	}
 }
 
+func TestStringByte(t *testing.T) {
+	s := "abcdefg"
+	b := []byte(s)
+	bs := string(b)
+	if s != bs {
+		t.Errorf("expected: %s, got: %s", s, bs)
+	}
+}
+
 func testNoRun(t *testing.T) {
 	t.Error("Test No Run for first char is lower case~")
 }
