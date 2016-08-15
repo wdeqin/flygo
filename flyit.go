@@ -1,6 +1,6 @@
 package main
 
-import "github.com/wdeqin/flyit/dispatch"
+import "github.com/wdeqin/flygo/dispatch"
 import "math/rand"
 
 func main() {
