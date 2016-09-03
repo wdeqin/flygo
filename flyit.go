@@ -1,18 +1,30 @@
 package main
 
-import "github.com/wdeqin/flygo/dispatch"
-import "math/rand"
+import (
+	"fmt"
+	"github.com/wdeqin/flygo/daoutil"
+)
 
 func main() {
-	d := dispatch.NewDefaultDispatchee(7)
-	dd := dispatch.NewThresholdDispatcher(4, &d)
-	data := make([]interface{}, 10)
-	for c := 0; c < 100; c++ {
-		for i := range data {
-			data[i] = rand.Int() % 100
-		}
-		dd.Dispatch(data)
+	c := make(chan string)
+	n := 10
+	for i := 0; i < n; i++ {
+		go func(i int, c chan<- string) {
+			for j := 0; j < 1000; j++ {
+				c <- fmt.Sprintf("[%d] %d", i, daoutil.NxtVal("#TSTSEQ#"))
+			}
+			c <- "$"
+		}(i, c)
 	}
-	dd.CleanUp()
-	dd.Wait()
+
+	for s, k := <-c, 0; true; s = <-c {
+		if s == "$" {
+			k++
+			if k == n {
+				break
+			}
+		} else {
+			fmt.Println(s)
+		}
+	}
 }
